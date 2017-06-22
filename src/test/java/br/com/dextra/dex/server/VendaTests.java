@@ -15,6 +15,7 @@ import br.com.dextra.dex.server.db.Database;
 import br.com.dextra.dex.server.db.sample.SampleDbData;
 import br.com.dextra.dex.server.db.sample.SimpleMemoryDb;
 import br.com.dextra.dex.server.domain.Ingrediente;
+import br.com.dextra.dex.server.domain.Lanche;
 import br.com.dextra.dex.server.domain.LancheConfig;
 import br.com.dextra.dex.server.domain.Venda;
 import br.com.dextra.dex.server.promo.DefaultPromocaoManager;
@@ -78,13 +79,13 @@ public class VendaTests {
 
 	@Test
 	public void testVendaRemoveLancheAoRemoverUltimoIngrediente() {
-		final Integer lancheId = venda.addLanche();
+		final Lanche lanche = venda.addLanche();
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 
-		venda.addIngrediente(lancheId, ovo);
+		venda.addIngrediente(lanche.getId(), ovo);
 		assertThat(venda.getValorTotal(), is(equalTo(ovo.getValor())));
 
-		venda.removeIngrediente(lancheId, ovo);
+		venda.removeIngrediente(lanche.getId(), ovo);
 		assertThat(venda.getLancheCount(), is(equalTo(0)));
 		assertThat(venda.getValorTotal(), is(equalTo(BigDecimal.ZERO)));
 	}
@@ -94,13 +95,13 @@ public class VendaTests {
 		final BigDecimal valorXEggSalada = soma(ovo, burger, queijo, alface).multiply(new BigDecimal("0.90")).setScale(2, RoundingMode.HALF_EVEN);
 		final BigDecimal valorXEgg = soma(ovo, burger, queijo);
 
-		final Integer lancheId = venda.addLanche(getLanche("X-Egg"));
+		final Lanche lanche = venda.addLanche(getLanche("X-Egg"));
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 
-		venda.addIngrediente(lancheId, alface);
+		venda.addIngrediente(lanche.getId(), alface);
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEggSalada)));
 
-		venda.removeIngrediente(lancheId, alface);
+		venda.removeIngrediente(lanche.getId(), alface);
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEgg)));
 	}
@@ -110,13 +111,13 @@ public class VendaTests {
 		final BigDecimal valorXEggSalada = soma(ovo, burger, queijo, alface).multiply(new BigDecimal("0.90")).setScale(2, RoundingMode.HALF_EVEN);
 		final BigDecimal valorXEggSaladaBacon = soma(ovo, burger, queijo, alface, bacon);
 
-		final Integer lancheId = venda.addLanche(getLanche("X-Egg"));
+		final Lanche lanche = venda.addLanche(getLanche("X-Egg"));
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 
-		venda.addIngrediente(lancheId, alface);
+		venda.addIngrediente(lanche.getId(), alface);
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEggSalada)));
 
-		venda.addIngrediente(lancheId, bacon);
+		venda.addIngrediente(lanche.getId(), bacon);
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEggSaladaBacon)));
 	}
@@ -126,17 +127,17 @@ public class VendaTests {
 		final BigDecimal valorXMuito = soma(ovo, burger, queijo, queijo, bacon, queijo, bacon, alface);
 		final BigDecimal valorXMuitoDesconto = soma(ovo, burger, queijo, queijo, bacon, /* queijo, bacon, */ alface);
 
-		final Integer lancheId = venda.addLanche(getLanche("X-Egg"));
-		venda.addIngrediente(lancheId, queijo);
-		venda.addIngrediente(lancheId, bacon);
-		venda.addIngrediente(lancheId, queijo);
-		venda.addIngrediente(lancheId, bacon);
-		venda.addIngrediente(lancheId, alface);
+		final Lanche lanche = venda.addLanche(getLanche("X-Egg"));
+		venda.addIngrediente(lanche.getId(), queijo);
+		venda.addIngrediente(lanche.getId(), bacon);
+		venda.addIngrediente(lanche.getId(), queijo);
+		venda.addIngrediente(lanche.getId(), bacon);
+		venda.addIngrediente(lanche.getId(), alface);
 
 		assertThat(venda.getValorTotal(), is(equalTo(valorXMuitoDesconto)));
 		assertThat(venda.getValorBruto(), is(equalTo(valorXMuito)));
 
-		venda.removeIngrediente(lancheId, bacon);
+		venda.removeIngrediente(lanche.getId(), bacon);
 		assertThat(venda.getValorTotal(), is(equalTo(valorXMuitoDesconto)));
 	}
 
@@ -147,13 +148,13 @@ public class VendaTests {
 		venda.addLanche(getLanche("X-Egg Bacon"));
 		venda.addLanche(getLanche("X-Egg Bacon"));
 		venda.addLanche(getLanche("X-Egg Bacon"));
-		final Integer lancheId = venda.addLanche(getLanche("X-Egg Bacon"));
+		final Lanche lanche = venda.addLanche(getLanche("X-Egg Bacon"));
 
 		assertThat(venda.getLancheCount(), is(equalTo(4)));
 		assertThat(venda.getValorTotal(), is(equalTo(valorTotal)));
 		assertThat(venda.getValorBruto(), is(equalTo(valorTotal)));
 
-		venda.addIngrediente(lancheId, bacon);
+		venda.addIngrediente(lanche.getId(), bacon);
 
 		assertThat(venda.getValorTotal(), is(equalTo(valorTotal)));
 		assertThat(venda.getValorBruto(), is(equalTo(valorTotal.add(bacon.getValor()))));

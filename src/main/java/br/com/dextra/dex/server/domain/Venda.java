@@ -1,6 +1,10 @@
 package br.com.dextra.dex.server.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,20 +25,32 @@ public class Venda extends Entidade {
 		this.promoManager = promoManager;
 	}
 
-	public Integer addLanche() {
+	public Lanche addLanche() {
 		return addLanche(new Lanche("Lanche Personalizado"));
 	}
 
-	public Integer addLanche(final LancheConfig config) {
+	public Lanche addLanche(final LancheConfig config) {
 		return addLanche(config.getLanche());
 	}
 
-	private Integer addLanche(final Lanche lanche) {
+	private Lanche addLanche(final Lanche lanche) {
 		lanches.values().removeIf(v -> v.getIngredientes().isEmpty());
 
 		final Integer lancheId = idGenerator.incrementAndGet();
 		lanches.put(lancheId, lanche);
-		return lancheId;
+		lanche.setId(lancheId);
+		return lanche;
+	}
+
+	public Collection<Lanche> getLanches() {
+		final List<Lanche> lanchesOrdered = new ArrayList<>();
+		lanchesOrdered.addAll(lanches.values());
+		Collections.sort(lanchesOrdered, (a, b) -> a.getId().compareTo(b.getId()));
+		return lanchesOrdered;
+	}
+
+	public Lanche getLanche(final Integer lancheId) {
+		return lanches.get(lancheId);
 	}
 
 	public void addIngrediente(final Integer lancheId, final Ingrediente ingrediente) {

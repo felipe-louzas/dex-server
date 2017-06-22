@@ -1,4 +1,4 @@
-package br.com.dextra.dex.server;
+package br.com.dextra.dex.server.domain;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;

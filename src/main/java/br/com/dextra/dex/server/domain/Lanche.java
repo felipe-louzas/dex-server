@@ -37,19 +37,19 @@ public class Lanche extends Entidade {
 		return Collections.unmodifiableCollection(ingredientes);
 	}
 
-	public void addIngrediente(final Ingrediente ingrediente) {
+	protected void addIngrediente(final Ingrediente ingrediente) {
 		ingredientes.add(ingrediente);
 	}
 
-	public void removeIngrediente(final Ingrediente ingrediente) {
+	protected void removeIngrediente(final Ingrediente ingrediente) {
 		ingredientes.remove(ingrediente);
 	}
 
-	public void addPromocao(final Promocao promocao, final BigDecimal valorDesconto) {
+	protected void addPromocao(final Promocao promocao, final BigDecimal valorDesconto) {
 		promocoes.put(promocao, valorDesconto);
 	}
 
-	public void removePromocao(final Promocao promocao) {
+	protected void removePromocao(final Promocao promocao) {
 		promocoes.remove(promocao);
 	}
 
