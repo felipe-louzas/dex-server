@@ -1,4 +1,4 @@
-package br.com.dextra.dex.server.ws;
+package br.com.dextra.dex.server.ws.support;
 
 import javax.inject.Singleton;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -15,7 +15,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
 	public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) {
 		final MultivaluedMap<String, Object> headers = responseContext.getHeaders();
 		headers.add("Access-Control-Allow-Origin", "*");
-		headers.add("Access-Control-Allow-Headers", "X-Custom-Header");
+		headers.add("Access-Control-Allow-Headers", "Content-Type");
 	}
 
 }
