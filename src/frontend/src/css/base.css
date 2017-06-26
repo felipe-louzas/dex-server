@@ -1,0 +1,22 @@
+body {
+    padding-top: 50px;
+    color: #E4E6E7;
+    background-color: #253138;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.row.no-padding > [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}

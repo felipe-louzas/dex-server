@@ -1,0 +1,28 @@
+.rootView {
+  max-width: 90%;
+}
+
+.rootView > .row > [class*='col-'] {
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+.rootView > .row > div > div {
+  background-color: #2F3E47;
+  border-radius: 5px;
+  padding-bottom: 20px;
+}
+
+.vendaNumber {
+  height: 2.5em;
+  overflow: hidden;
+}
+
+.alert-fixed {
+    position:fixed;
+    top: 0px;
+    left: 25%;
+    width: 50%;
+    z-index:9999;
+    border-radius:0px
+}
