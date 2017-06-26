@@ -60,9 +60,10 @@ public class PromocaoLevePague extends Promocao {
 
 		final List<Ingrediente> matchedIngredientes = new ArrayList<>();
 
-		for (final Ingrediente ingredienteLanche : lanche.getIngredientes()) {
-			for (final Ingrediente ingredientePromocao : ingredientes) {
-				if (ingredienteLanche.equals(ingredientePromocao)) matchedIngredientes.add(ingredienteLanche);
+		for (final Ingrediente ingredientePromocao : ingredientes) {
+			final Integer count = lanche.getIngredienteCount(ingredientePromocao);
+			for (int i = 0; i < count; i++) {
+				matchedIngredientes.add(ingredientePromocao);
 			}
 		}
 

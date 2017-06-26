@@ -85,7 +85,7 @@ public class VendaTests {
 		venda.addIngrediente(lanche.getId(), ovo);
 		assertThat(venda.getValorTotal(), is(equalTo(ovo.getValor())));
 
-		venda.removeIngrediente(lanche.getId(), ovo);
+		venda.subtractIngrediente(lanche.getId(), ovo);
 		assertThat(venda.getLancheCount(), is(equalTo(0)));
 		assertThat(venda.getValorTotal(), is(equalTo(BigDecimal.ZERO)));
 	}
@@ -101,7 +101,7 @@ public class VendaTests {
 		venda.addIngrediente(lanche.getId(), alface);
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEggSalada)));
 
-		venda.removeIngrediente(lanche.getId(), alface);
+		venda.subtractIngrediente(lanche.getId(), alface);
 		assertThat(venda.getLancheCount(), is(equalTo(1)));
 		assertThat(venda.getValorTotal(), is(equalTo(valorXEgg)));
 	}
@@ -137,7 +137,7 @@ public class VendaTests {
 		assertThat(venda.getValorTotal(), is(equalTo(valorXMuitoDesconto)));
 		assertThat(venda.getValorBruto(), is(equalTo(valorXMuito)));
 
-		venda.removeIngrediente(lanche.getId(), bacon);
+		venda.subtractIngrediente(lanche.getId(), bacon);
 		assertThat(venda.getValorTotal(), is(equalTo(valorXMuitoDesconto)));
 	}
 

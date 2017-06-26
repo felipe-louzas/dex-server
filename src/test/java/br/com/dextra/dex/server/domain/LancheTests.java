@@ -12,9 +12,6 @@ import org.junit.Test;
 import br.com.dextra.dex.server.db.Database;
 import br.com.dextra.dex.server.db.sample.SampleDbData;
 import br.com.dextra.dex.server.db.sample.SimpleMemoryDb;
-import br.com.dextra.dex.server.domain.Ingrediente;
-import br.com.dextra.dex.server.domain.Lanche;
-import br.com.dextra.dex.server.domain.LancheConfig;
 
 public class LancheTests {
 
@@ -77,7 +74,7 @@ public class LancheTests {
 		final Ingrediente queijo = database.findIngrediente(p -> "Queijo".equals(p.getDescricao()));
 
 		xBurger.addIngrediente(alface);
-		xBurger.removeIngrediente(queijo);
+		xBurger.subtractIngrediente(queijo);
 
 		assertThat(xBurger.getValorBruto(), is(equalTo(valorIngredientes)));
 	}
@@ -94,9 +91,9 @@ public class LancheTests {
 		final Ingrediente ovo = database.findIngrediente(p -> "Ovo".equals(p.getDescricao()));
 
 		xBurger.addIngrediente(alface);
-		xBurger.removeIngrediente(queijo);
-		xBurger.removeIngrediente(queijo);
-		xBurger.removeIngrediente(ovo);
+		xBurger.subtractIngrediente(queijo);
+		xBurger.subtractIngrediente(queijo);
+		xBurger.subtractIngrediente(ovo);
 
 		assertThat(xBurger.getValorBruto(), is(equalTo(valorIngredientes)));
 	}

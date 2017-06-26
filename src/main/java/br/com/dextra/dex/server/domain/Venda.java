@@ -62,11 +62,25 @@ public class Venda extends Entidade {
 		if (promoManager != null) promoManager.applyPromocoes(lanche);
 	}
 
-	public void removeIngrediente(final Integer lancheId, final Ingrediente ingrediente) {
+	public void removeIngredienteTotal(final Integer lancheId, final Ingrediente ingrediente) {
 		final Lanche lanche = lanches.get(lancheId);
 		if (lanche == null) return;
 
-		lanche.removeIngrediente(ingrediente);
+		lanche.removeIngredienteTotal(ingrediente);
+
+		if (lanche.getIngredientes().isEmpty()) {
+			lanches.remove(lancheId);
+			return;
+		}
+
+		if (promoManager != null) promoManager.applyPromocoes(lanche);
+	}
+
+	public void subtractIngrediente(final Integer lancheId, final Ingrediente ingrediente) {
+		final Lanche lanche = lanches.get(lancheId);
+		if (lanche == null) return;
+
+		lanche.subtractIngrediente(ingrediente);
 
 		if (lanche.getIngredientes().isEmpty()) {
 			lanches.remove(lancheId);

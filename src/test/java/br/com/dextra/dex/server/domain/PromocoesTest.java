@@ -13,10 +13,6 @@ import org.junit.Test;
 import br.com.dextra.dex.server.db.Database;
 import br.com.dextra.dex.server.db.sample.SampleDbData;
 import br.com.dextra.dex.server.db.sample.SimpleMemoryDb;
-import br.com.dextra.dex.server.domain.Ingrediente;
-import br.com.dextra.dex.server.domain.Lanche;
-import br.com.dextra.dex.server.domain.LancheConfig;
-import br.com.dextra.dex.server.domain.Promocao;
 
 public class PromocoesTest {
 
@@ -116,7 +112,7 @@ public class PromocoesTest {
 		xBacon.addIngrediente(alface);
 		assertThat(promoLight.appliesTo(xBacon), is(false));
 
-		xBacon.removeIngrediente(bacon);
+		xBacon.subtractIngrediente(bacon);
 		assertThat(promoLight.appliesTo(xBacon), is(true));
 	}
 
@@ -124,18 +120,18 @@ public class PromocoesTest {
 	public void testPromocaoLightDoisBacons() {
 		xBacon.addIngrediente(bacon);
 		xBacon.addIngrediente(alface);
-		xBacon.removeIngrediente(bacon);
+		xBacon.subtractIngrediente(bacon);
 
 		assertThat(promoLight.appliesTo(xBacon), is(false));
 
-		xBacon.removeIngrediente(bacon);
+		xBacon.subtractIngrediente(bacon);
 		assertThat(promoLight.appliesTo(xBacon), is(true));
 	}
 
 	@Test
 	public void testPromocaoLightValorXBaconComAlfaceSemBacon() {
 		xBacon.addIngrediente(alface);
-		xBacon.removeIngrediente(bacon);
+		xBacon.subtractIngrediente(bacon);
 
 		final BigDecimal tenPercent = xBacon.getValorBruto().movePointLeft(1).setScale(2, RoundingMode.HALF_EVEN);
 
@@ -264,15 +260,15 @@ public class PromocoesTest {
 		assertThat(promoMaisQueijo.appliesTo(xBacon), is(true));
 		assertThat(promoMaisQueijo.getValorDesconto(xBacon), is(equalTo(queijo.getValor().multiply(new BigDecimal(2)))));
 
-		xBacon.removeIngrediente(queijo);
-		xBacon.removeIngrediente(queijo); // 5 Queijos
+		xBacon.subtractIngrediente(queijo);
+		xBacon.subtractIngrediente(queijo); // 5 Queijos
 
 		assertThat(promoMaisQueijo.appliesTo(xBacon), is(true));
 		assertThat(promoMaisQueijo.getValorDesconto(xBacon), is(equalTo(queijo.getValor())));
 
-		xBacon.removeIngrediente(queijo);
-		xBacon.removeIngrediente(queijo);
-		xBacon.removeIngrediente(queijo); // 2 Queijos
+		xBacon.subtractIngrediente(queijo);
+		xBacon.subtractIngrediente(queijo);
+		xBacon.subtractIngrediente(queijo); // 2 Queijos
 
 		assertThat(promoMaisQueijo.appliesTo(xBacon), is(false));
 		assertThat(promoMaisQueijo.getValorDesconto(xBacon), is(equalTo(BigDecimal.ZERO)));

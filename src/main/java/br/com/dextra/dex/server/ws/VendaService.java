@@ -84,7 +84,16 @@ public class VendaService {
 	public Venda removeIngrediente(@PathParam("id") final Integer vendaId, @PathParam("num") final Integer lancheId, @PathParam("ingred") final Integer ingredienteId) {
 		final Venda venda = database.getVenda(vendaId);
 		final Ingrediente ingrediente = database.getIngrediente(ingredienteId);
-		venda.removeIngrediente(lancheId, ingrediente);
+		venda.removeIngredienteTotal(lancheId, ingrediente);
+		return venda;
+	}
+
+	@GET
+	@Path("{id}/lanches/{num}/subtract/{ingred}")
+	public Venda subtractIngrediente(@PathParam("id") final Integer vendaId, @PathParam("num") final Integer lancheId, @PathParam("ingred") final Integer ingredienteId) {
+		final Venda venda = database.getVenda(vendaId);
+		final Ingrediente ingrediente = database.getIngrediente(ingredienteId);
+		venda.removeIngredienteTotal(lancheId, ingrediente);
 		return venda;
 	}
 }
