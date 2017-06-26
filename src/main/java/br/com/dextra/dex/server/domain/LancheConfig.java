@@ -1,11 +1,15 @@
 package br.com.dextra.dex.server.domain;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LancheConfig extends Entidade {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class LancheConfig extends Entidade implements CatalogoItem {
 
 	private String descricao;
 	private List<Ingrediente> ingredientes;
@@ -26,6 +30,7 @@ public class LancheConfig extends Entidade {
 		this.ingredientes = lancheConfig.ingredientes.stream().map(p -> new Ingrediente(p)).collect(Collectors.toList());
 	}
 
+	@Override
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -37,8 +42,13 @@ public class LancheConfig extends Entidade {
 		return this.ingredientes;
 	}
 
-	public Lanche getLanche() {
+	public Lanche buildLanche() {
 		return new Lanche(descricao, ingredientes);
+	}
+
+	@Override
+	public BigDecimal getValor() {
+		return ingredientes.stream().map(Ingrediente::getValor).reduce((a, b) -> a.add(b)).orElse(BigDecimal.ZERO);
 	}
 
 }

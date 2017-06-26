@@ -15,6 +15,9 @@ public class Venda extends Entidade {
 
 	private final AtomicInteger idGenerator = new AtomicInteger();
 	private final Map<Integer, Lanche> lanches = new ConcurrentHashMap<>();
+
+	private boolean cancelada;
+
 	private PromocaoManager promoManager;
 
 	public Venda() {
@@ -30,7 +33,7 @@ public class Venda extends Entidade {
 	}
 
 	public Lanche addLanche(final LancheConfig config) {
-		return addLanche(config.getLanche());
+		return addLanche(config.buildLanche());
 	}
 
 	private Lanche addLanche(final Lanche lanche) {
@@ -45,7 +48,7 @@ public class Venda extends Entidade {
 	public Collection<Lanche> getLanches() {
 		final List<Lanche> lanchesOrdered = new ArrayList<>();
 		lanchesOrdered.addAll(lanches.values());
-		Collections.sort(lanchesOrdered, (a, b) -> a.getId().compareTo(b.getId()));
+		Collections.sort(lanchesOrdered, (a, b) -> b.getId().compareTo(a.getId()));
 		return lanchesOrdered;
 	}
 
@@ -60,6 +63,25 @@ public class Venda extends Entidade {
 		lanche.addIngrediente(ingrediente);
 
 		if (promoManager != null) promoManager.applyPromocoes(lanche);
+	}
+
+	public void addIngrediente(final Ingrediente ingrediente) {
+		final Lanche lanche;
+		if (lanches.isEmpty()) {
+			lanche = addLanche();
+		} else {
+			lanche = getLanches().iterator().next();
+		}
+
+		addIngrediente(lanche.getId(), ingrediente);
+	}
+
+	public boolean isCancelada() {
+		return this.cancelada;
+	}
+
+	public void setCancelada(final boolean cancelada) {
+		this.cancelada = cancelada;
 	}
 
 	public void removeIngredienteTotal(final Integer lancheId, final Ingrediente ingrediente) {
@@ -105,5 +127,4 @@ public class Venda extends Entidade {
 	public BigDecimal getValorBruto() {
 		return lanches.values().stream().map(Lanche::getValorBruto).reduce((a, b) -> a.add(b)).orElse(BigDecimal.ZERO);
 	}
-
 }

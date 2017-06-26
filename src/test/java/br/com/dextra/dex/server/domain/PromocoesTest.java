@@ -49,8 +49,8 @@ public class PromocoesTest {
 		final LancheConfig xEggConfig = database.findLancheConfig(p -> "X-Egg".equals(p.getDescricao()));
 		final LancheConfig xBaconConfig = database.findLancheConfig(p -> "X-Bacon".equals(p.getDescricao()));
 
-		xEgg = xEggConfig.getLanche();
-		xBacon = xBaconConfig.getLanche();
+		xEgg = xEggConfig.buildLanche();
+		xBacon = xBaconConfig.buildLanche();
 	}
 
 	@After

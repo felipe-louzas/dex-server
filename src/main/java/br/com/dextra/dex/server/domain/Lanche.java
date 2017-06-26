@@ -1,11 +1,13 @@
 package br.com.dextra.dex.server.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Lanche extends Entidade {
@@ -106,6 +108,14 @@ public class Lanche extends Entidade {
 		return ingredienteQtd.getQuantidade();
 	}
 
+	public Collection<Desconto> getDescontos() {
+		final List<Desconto> descontos = new ArrayList<>();
+		for (final Entry<Promocao, BigDecimal> entries : promocoes.entrySet()) {
+			descontos.add(new Desconto(entries.getKey().getId(), entries.getKey().getDescricao(), entries.getValue()));
+		}
+		return descontos;
+	}
+
 	public static final class QuantidadeIngrediente {
 		private final Ingrediente ingrediente;
 		private final AtomicInteger quantidade;
@@ -130,5 +140,31 @@ public class Lanche extends Entidade {
 		public Integer diminuiQuantidade(final Integer quanto) {
 			return quantidade.addAndGet(-quanto);
 		}
+	}
+
+	public static final class Desconto {
+
+		private final Integer promocaoId;
+		private final String descricao;
+		private final BigDecimal value;
+
+		public Desconto(final Integer promocaoId, final String descricao, final BigDecimal value) {
+			this.promocaoId = promocaoId;
+			this.descricao = descricao;
+			this.value = value;
+		}
+
+		public Integer getPromocaoId() {
+			return this.promocaoId;
+		}
+
+		public String getDescricao() {
+			return this.descricao;
+		}
+
+		public BigDecimal getValue() {
+			return this.value;
+		}
+
 	}
 }

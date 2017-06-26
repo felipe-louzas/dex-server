@@ -55,7 +55,7 @@ public class LancheTests {
 		final BigDecimal valorIngredientes = getValorIngredientes("Alface", "Ovo", "Bacon", "Hambúrguer de carne", "Queijo");
 
 		final LancheConfig xEggBaconConfig = database.findLancheConfig((p) -> "X-Egg Bacon".equals(p.getDescricao()));
-		final Lanche xEggBacon = xEggBaconConfig.getLanche();
+		final Lanche xEggBacon = xEggBaconConfig.buildLanche();
 
 		final Ingrediente alface = database.findIngrediente(p -> "Alface".equals(p.getDescricao()));
 
@@ -68,7 +68,7 @@ public class LancheTests {
 		final BigDecimal valorIngredientes = getValorIngredientes("Alface", "Hambúrguer de carne");
 
 		final LancheConfig xBurgerConfig = database.findLancheConfig((p) -> "X-Burger".equals(p.getDescricao()));
-		final Lanche xBurger = xBurgerConfig.getLanche();
+		final Lanche xBurger = xBurgerConfig.buildLanche();
 
 		final Ingrediente alface = database.findIngrediente(p -> "Alface".equals(p.getDescricao()));
 		final Ingrediente queijo = database.findIngrediente(p -> "Queijo".equals(p.getDescricao()));
@@ -84,7 +84,7 @@ public class LancheTests {
 		final BigDecimal valorIngredientes = getValorIngredientes("Alface", "Hambúrguer de carne");
 
 		final LancheConfig xBurgerConfig = database.findLancheConfig((p) -> "X-Burger".equals(p.getDescricao()));
-		final Lanche xBurger = xBurgerConfig.getLanche();
+		final Lanche xBurger = xBurgerConfig.buildLanche();
 
 		final Ingrediente alface = database.findIngrediente(p -> "Alface".equals(p.getDescricao()));
 		final Ingrediente queijo = database.findIngrediente(p -> "Queijo".equals(p.getDescricao()));
@@ -102,7 +102,7 @@ public class LancheTests {
 		final BigDecimal valorIngredientes = getValorIngredientes(nomeIngredientes);
 
 		final LancheConfig lancheConfig = database.findLancheConfig(p -> nomeLanche.equals(p.getDescricao()));
-		final Lanche lanche = lancheConfig.getLanche();
+		final Lanche lanche = lancheConfig.buildLanche();
 
 		assertThat(lanche.getValorBruto(), is(equalTo(valorIngredientes)));
 	}

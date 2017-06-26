@@ -2,7 +2,7 @@ package br.com.dextra.dex.server.domain;
 
 import java.math.BigDecimal;
 
-public class Ingrediente extends Entidade {
+public class Ingrediente extends Entidade implements CatalogoItem {
 
 	private String descricao;
 	private BigDecimal valor;
@@ -27,6 +27,7 @@ public class Ingrediente extends Entidade {
 		this.valor = ingrediente.valor;
 	}
 
+	@Override
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -35,6 +36,7 @@ public class Ingrediente extends Entidade {
 		this.descricao = descricao;
 	}
 
+	@Override
 	public BigDecimal getValor() {
 		return this.valor;
 	}
