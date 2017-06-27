@@ -29,7 +29,7 @@ public class Venda extends Entidade {
 	}
 
 	public Lanche addLanche() {
-		return addLanche(new Lanche("Lanche Personalizado"));
+		return addLanche(new Lanche("Lanche"));
 	}
 
 	public Lanche addLanche(final LancheConfig config) {

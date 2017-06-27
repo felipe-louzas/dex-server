@@ -21,6 +21,7 @@ public class SampleDbData {
 		final Ingrediente ovo = new Ingrediente("Ovo", "0.80");
 		final Ingrediente queijo = new Ingrediente("Queijo", "1.50");
 
+		final LancheConfig lanchePersonalizado = new LancheConfig("Lanche");
 		final LancheConfig xBacon = new LancheConfig("X-Bacon", bacon, burger, queijo);
 		final LancheConfig xBurger = new LancheConfig("X-Burger", burger, queijo);
 		final LancheConfig xEgg = new LancheConfig("X-Egg", ovo, burger, queijo);
@@ -47,6 +48,7 @@ public class SampleDbData {
 		db.saveIngrediente(ovo);
 		db.saveIngrediente(queijo);
 
+		db.saveLancheConfig(lanchePersonalizado);
 		db.saveLancheConfig(xBacon);
 		db.saveLancheConfig(xBurger);
 		db.saveLancheConfig(xEgg);
